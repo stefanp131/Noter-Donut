@@ -2,19 +2,20 @@
   <div class="toolbar-area" fxLayout="row" fxLayoutAlign="space-between">
     <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1rem">
       <span>NoterDonut</span>
+      <span  *ngIf="accountService.currentUser$ | async">Hi {{(accountService.currentUser$ | async).userName}}!</span>
       <button mat-raised-button *ngIf="accountService.currentUser$ | async" routerLink="/notesboard" color="accent">
         <mat-icon>notes</mat-icon>
         <span>NotesBoard</span>
       </button>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1rem">
-      <button mat-raised-button color="info" routerLink="/register">
+      <button mat-raised-button *ngIf="(accountService.currentUser$ | async) === null" color="info" routerLink="/register">
         Register
       </button>
       <button mat-raised-button *ngIf="(accountService.currentUser$ | async) === null" color="accent" routerLink="/login">
         Login
       </button>
-      <button mat-raised-button *ngIf="accountService.currentUser$ | async" color="warn" routerLink="/login">
+      <button mat-raised-button *ngIf="accountService.currentUser$ | async" color="warn" (click)="logout()">
         Logout
       </button>
     </div>

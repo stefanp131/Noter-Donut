@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { AccountService } from '../services/account.service';
 
 @Component({
@@ -10,7 +12,7 @@ import { AccountService } from '../services/account.service';
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;  
 
-  constructor(private accountService: AccountService, private formBuilder: FormBuilder) { }
+  constructor(private accountService: AccountService, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private router: Router ) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -25,6 +27,10 @@ export class RegisterComponent implements OnInit {
   }
 
   register() {
-    console.log(this.registerForm.value);
+    this.accountService.register(this.registerForm.value).subscribe(() => {
+      this.snackBar.open('Successfully registered in!', 'Dismiss', { duration: 5000 });
+    }, () => {
+      this.snackBar.open('Something went wrong!', 'Dismiss', { duration: 5000 })
+    });
   }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { AccountService } from '../services/account.service';
 
 @Component({
@@ -10,7 +11,7 @@ import { AccountService } from '../services/account.service';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
 
-  constructor(private accountService: AccountService, private formBuilder: FormBuilder) { }
+  constructor(private accountService: AccountService, private formBuilder: FormBuilder,private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.initForm()
@@ -24,6 +25,10 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    console.log(this.loginForm.value);
+    this.accountService.login(this.loginForm.value).subscribe(() => {
+      this.snackBar.open('Successfully logged in!', 'Dismiss', { duration: 5000 })
+    }, () => {
+      this.snackBar.open('Wrong credentials!', 'Dismiss', { duration: 5000 })
+    });
   }
 }
