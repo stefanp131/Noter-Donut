@@ -1,7 +1,7 @@
 <mat-toolbar color="primary">
   <div class="toolbar-area" fxLayout="row" fxLayoutAlign="space-between">
     <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1rem">
-      <span>NoterDonut</span>
+      <span style="font-family: 'Bowlby One SC';">NoterDonut</span>
       <span  *ngIf="accountService.currentUser$ | async">Hi {{(accountService.currentUser$ | async).userName}}!</span>
       <button mat-raised-button *ngIf="accountService.currentUser$ | async" routerLink="/notesboard" color="accent">
         <mat-icon>notes</mat-icon>
